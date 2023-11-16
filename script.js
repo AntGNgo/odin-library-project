@@ -41,7 +41,16 @@ newBookBtn.addEventListener('click', (e) => {
 
 const deleteBook = (bookID) => {
 	const bookIndex = books.findIndex((book) => book.id === bookID);
+	console.log(`Index : ${bookIndex}`);
 	books.splice(bookIndex, 1);
+	updateBooksList(books);
+};
+
+const readBook = (bookID) => {
+	const bookIndex = books.findIndex((book) => book.id === bookID);
+	console.log(`Index : ${bookIndex}`);
+	books[bookIndex].read = !books[bookIndex].read;
+	books[bookIndex].classList.toggle('read');
 	updateBooksList(books);
 };
 
@@ -54,10 +63,17 @@ const updateBooksList = (list) => {
 		const authorDiv = document.createElement('div');
 		const pagesDiv = document.createElement('div');
 		const readDiv = document.createElement('div');
+		const buttons = document.createElement('div');
 		const deleteBtn = document.createElement('button');
+		const readBtn = document.createElement('button');
+
+		buttons.classList.add('buttons');
 
 		deleteBtn.textContent = 'X';
 		deleteBtn.classList.add = 'delete-btn';
+
+		readBtn.textContent = 'Read';
+		readBtn.classList.add = 'read-btn';
 
 		deleteBtn.addEventListener('click', () => {
 			deleteBook(book.id);
@@ -76,16 +92,18 @@ const updateBooksList = (list) => {
 			bookMiddle.appendChild(child);
 		});
 
-		bookDiv.appendChild(deleteBtn);
+		buttons.appendChild(deleteBtn);
+		buttons.appendChild(readBtn);
 		bookDiv.appendChild(bookMiddle);
+		bookDiv.appendChild(buttons);
 
 		titleDiv.textContent = book.title;
 		authorDiv.textContent = `By: ${book.author}`;
 		pagesDiv.textContent = `Pages: ${book.pages}`;
 		readDiv.textContent = `Read: ${book.read}`;
 
-		bookDiv.addEventListener('click', () => {
-			bookDiv.classList.toggle('read');
+		readBtn.addEventListener('click', () => {
+			readBook(book.id);
 		});
 
 		booksList.appendChild(bookDiv);
