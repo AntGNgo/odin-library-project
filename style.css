@@ -12,14 +12,37 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	background-color: #000000;
 	color: #fff;
+	padding: 50px;
+}
+
+h1 {
+	font-size: 2.5rem;
+	margin-bottom: 20px;
+	border-bottom: 2px solid var(--grey);
+	padding-bottom: 10px;
+	width: 70%;
+}
+
+h2 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+}
+
+.container {
+	display: flex;
+	gap: 40px;
+}
+
+.form-title {
+	font-size: 1.5rem;
 }
 
 form {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	gap: 10px;
-	margin-bottom: 20px;
+	margin-top: 10px;
 }
 
 form input {
@@ -49,19 +72,49 @@ form button:active {
 	color: var(--white);
 }
 
-.books {
+.shelf {
+	border-left: 1px solid var(--yellow);
+	padding-left: 20px;
+	height: 50vh;
+}
+
+#books {
 	display: flex;
-	gap: 20px;
 	flex-wrap: wrap;
+	gap: 20px;
 }
 
 .book {
 	border: 5px solid #e5e5e5;
 	border-radius: 10px;
-	padding: 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	align-items: flex-start;
+	padding: 10px 20px;
+	height: 150px;
+	width: 200px;
+	gap: 20px;
+}
+
+.book:hover {
+	cursor: pointer;
+}
+
+.book button {
+	align-self: flex-end;
+	border: none;
+	background-color: var(--yellow);
+	padding: 7px 15px;
+	border-radius: 3px;
+}
+
+.book button:hover {
+	cursor: pointer;
+	transform: scale(1.05);
+}
+
+.book button:active {
+	transform: scale(1.03);
 }
 
 .book.read {
