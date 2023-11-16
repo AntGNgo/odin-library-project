@@ -23,7 +23,6 @@ function addBookToLibrary() {}
 
 newBookBtn.addEventListener('click', (e) => {
 	e.preventDefault();
-	console.log('running');
 	if (
 		bookTitleInput.value.length !== 0 &&
 		authorInput.value.length !== 0 &&
@@ -32,7 +31,7 @@ newBookBtn.addEventListener('click', (e) => {
 		const title = bookTitleInput.value;
 		const author = authorInput.value;
 		const pages = pagesInput.value;
-		const read = readInput.checked ? 'Yes' : 'No';
+		const read = readInput.checked;
 		const newBook = new Book(title, author, pages, read);
 		books.push(newBook);
 		updateBooksList(books);
@@ -48,10 +47,11 @@ const deleteBook = (bookID) => {
 
 const readBook = (bookID) => {
 	const bookIndex = books.findIndex((book) => book.id === bookID);
-	console.log(`Index : ${bookIndex}`);
+	console.log(`Before firing:`);
+	console.log(books[bookIndex]);
 	books[bookIndex].read = !books[bookIndex].read;
-	books[bookIndex].classList.toggle('read');
-	updateBooksList(books);
+	console.log(`After firing:`);
+	console.log(books[bookIndex]);
 };
 
 const updateBooksList = (list) => {
@@ -67,18 +67,6 @@ const updateBooksList = (list) => {
 		const deleteBtn = document.createElement('button');
 		const readBtn = document.createElement('button');
 
-		buttons.classList.add('buttons');
-
-		deleteBtn.textContent = 'X';
-		deleteBtn.classList.add = 'delete-btn';
-
-		readBtn.textContent = 'Read';
-		readBtn.classList.add = 'read-btn';
-
-		deleteBtn.addEventListener('click', () => {
-			deleteBook(book.id);
-		});
-
 		const childrenArray = [titleDiv, authorDiv, pagesDiv, readDiv];
 
 		bookDiv.classList.add('book');
@@ -87,23 +75,34 @@ const updateBooksList = (list) => {
 		authorDiv.classList.add('book-author');
 		pagesDiv.classList.add('book-pages');
 		readDiv.classList.add('book-read');
+		buttons.classList.add('buttons');
+		deleteBtn.classList.add = 'delete-btn';
+		readBtn.classList.add = 'read-btn';
+		book.read ? bookDiv.classList.add('read') : null;
+
+		titleDiv.textContent = book.title;
+		authorDiv.textContent = `By: ${book.author}`;
+		pagesDiv.textContent = `Pages: ${book.pages}`;
+		readDiv.textContent = `Read: ${book.read ? `Yes` : `No`}`;
+		deleteBtn.textContent = 'X';
+		readBtn.textContent = 'Read';
 
 		childrenArray.forEach((child) => {
 			bookMiddle.appendChild(child);
 		});
-
 		buttons.appendChild(deleteBtn);
 		buttons.appendChild(readBtn);
 		bookDiv.appendChild(bookMiddle);
 		bookDiv.appendChild(buttons);
 
-		titleDiv.textContent = book.title;
-		authorDiv.textContent = `By: ${book.author}`;
-		pagesDiv.textContent = `Pages: ${book.pages}`;
-		readDiv.textContent = `Read: ${book.read}`;
+		deleteBtn.addEventListener('click', () => {
+			deleteBook(book.id);
+		});
 
 		readBtn.addEventListener('click', () => {
+			bookDiv.classList.toggle('read');
 			readBook(book.id);
+			readDiv.textContent = `Read: ${book.read ? `Yes` : `No`}`;
 		});
 
 		booksList.appendChild(bookDiv);
