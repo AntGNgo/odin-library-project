@@ -12,6 +12,7 @@ function Book(title, author, pages, read) {
 	this.author = author;
 	this.pages = pages;
 	this.read = read;
+	this.id = Math.random();
 
 	this.readBook = function () {
 		this.read = !this.read;
