@@ -39,6 +39,12 @@ newBookBtn.addEventListener('click', (e) => {
 	}
 });
 
+const deleteBook = (bookID) => {
+	const bookIndex = books.findIndex((book) => book.id === bookID);
+	books.splice(bookIndex, 1);
+	updateBooksList(books);
+};
+
 const updateBooksList = (list) => {
 	booksList.textContent = '';
 	list.forEach((book) => {
@@ -52,6 +58,10 @@ const updateBooksList = (list) => {
 
 		deleteBtn.textContent = 'X';
 		deleteBtn.classList.add = 'delete-btn';
+
+		deleteBtn.addEventListener('click', () => {
+			deleteBook(book.id);
+		});
 
 		const childrenArray = [titleDiv, authorDiv, pagesDiv, readDiv];
 
